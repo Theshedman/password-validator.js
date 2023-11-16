@@ -18,7 +18,7 @@ export class DigitValidator extends PasswordValidator {
       return new ValidationResult(false, Array.of(message));
     }
 
-    return new ValidationResult(true, []);
+    return new ValidationResult(true, Array.of());
   }
 
   private numberOfDigitsIn(password: string): number {

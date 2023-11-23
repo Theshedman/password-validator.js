@@ -1,9 +1,8 @@
-import {Validator} from "./Validator.js";
-import {PasswordValidator} from "./PasswordValidator.js";
+import { Validator } from "./Validator.js";
+import { PasswordValidator } from "./PasswordValidator.js";
 
 export interface ValidatorManager extends Validator {
+  register(...validators: Array<PasswordValidator>): void;
 
-  register(...validators: PasswordValidator[]): void;
-
-  validators(): PasswordValidator[];
+  validators(): Array<PasswordValidator>;
 }

@@ -1,24 +1,21 @@
-import {ValidatorManager} from "./ValidatorManager.js";
-import {ValidationResult} from "./ValidationResult.js";
-import {PasswordValidator} from "./PasswordValidator.js";
-import {PasswordValidatorConflictException} from "./PasswordValidatorConflictException.js";
+import { ValidatorManager } from "./ValidatorManager.js";
+import { ValidationResult } from "./ValidationResult.js";
+import { PasswordValidator } from "./PasswordValidator.js";
+import { PasswordValidatorConflictException } from "./PasswordValidatorConflictException.js";
 
-export class PasswordValidatorManager implements ValidatorManager{
-
-  private readonly registeredValidators: PasswordValidator[];
+export class PasswordValidatorManager implements ValidatorManager {
+  private readonly registeredValidators: Array<PasswordValidator>;
 
   constructor() {
-
     this.registeredValidators = Array.of();
   }
 
-  public register(...validators: PasswordValidator[]): void {
-    const conflictMessages: String[] = Array.of();
+  public register(...validators: Array<PasswordValidator>): void {
+    const conflictMessages: Array<string> = Array.of();
 
     this.verifyEachValidatorAgainstThemselves(validators, conflictMessages);
 
-    for (let validator of validators) {
-
+    for (const validator of validators) {
       this.verifyAgainstOtherValidators(validator, conflictMessages);
 
       this.registerValidatorWithNoConflict(conflictMessages, validator);
@@ -28,18 +25,14 @@ export class PasswordValidatorManager implements ValidatorManager{
   }
 
   private verifyEachValidatorAgainstThemselves(
-    validators: PasswordValidator[],
-    conflictMessages: String[]
+    validators: Array<PasswordValidator>,
+    conflictMessages: Array<string>,
   ): void {
-
     for (let i = 0; i < validators.length; i++) {
-
       for (let j = i + 1; j < validators.length; j++) {
-
-        let conflictMsg = validators[i].conflictsWith(validators[j]);
+        const conflictMsg = validators[i].conflictsWith(validators[j]);
 
         if (conflictMsg.length > 0) {
-
           conflictMessages.push(...conflictMsg);
         }
       }
@@ -48,15 +41,12 @@ export class PasswordValidatorManager implements ValidatorManager{
 
   private verifyAgainstOtherValidators(
     validator: PasswordValidator,
-    conflictMessages: String[]
+    conflictMessages: Array<string>,
   ): void {
-
-    for (let registeredValidator of this.registeredValidators) {
-
-      let conflictMsg = validator.conflictsWith(registeredValidator);
+    for (const registeredValidator of this.registeredValidators) {
+      const conflictMsg = validator.conflictsWith(registeredValidator);
 
       if (this.hasConflict(conflictMsg)) {
-
         conflictMessages.push(...conflictMsg);
 
         break;
@@ -65,25 +55,20 @@ export class PasswordValidatorManager implements ValidatorManager{
   }
 
   private registerValidatorWithNoConflict(
-    conflictMessages: String[],
-    validator: PasswordValidator
+    conflictMessages: Array<string>,
+    validator: PasswordValidator,
   ): void {
-
     if (!this.hasConflict(conflictMessages)) {
-
       this.registeredValidators.push(validator);
     }
   }
 
-  private handleConflicts(conflictMessages: String[]): void {
-
+  private handleConflicts(conflictMessages: Array<string>): void {
     if (this.hasConflict(conflictMessages)) {
-
-      let message: string = '';
+      let message: string = "";
       let errorCount: number = 0;
 
-      for (let conflictMessage of conflictMessages) {
-
+      for (const conflictMessage of conflictMessages) {
         errorCount++;
 
         message += `${errorCount}: ${conflictMessage}\n`;
@@ -93,23 +78,19 @@ export class PasswordValidatorManager implements ValidatorManager{
     }
   }
 
-  private hasConflict(conflictMsg: String[]): boolean {
-
+  private hasConflict(conflictMsg: Array<string>): boolean {
     return conflictMsg.length > 0;
   }
 
-  public validators(): PasswordValidator[] {
-
+  public validators(): Array<PasswordValidator> {
     return this.registeredValidators;
   }
 
   public validate(password: string): ValidationResult {
-
-    const messages: string[] = Array.of();
+    const messages: Array<string> = Array.of();
     let isValid: boolean = true;
 
     for (const validator of this.registeredValidators) {
-
       const result = validator.validate(password);
 
       if (result.isValid()) {

@@ -1,6 +1,5 @@
-import {ValidationResult} from "./ValidationResult.js";
+import { ValidationResult } from "./ValidationResult.js";
 
 export interface Validator {
-
   validate(password: string): ValidationResult;
 }

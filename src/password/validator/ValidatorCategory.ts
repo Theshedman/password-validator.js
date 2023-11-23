@@ -3,7 +3,6 @@
  * @enum {string}
  */
 export enum ValidatorCategory {
-
   /**
    * Length expander constant.
    * @const
@@ -35,5 +34,5 @@ export enum ValidatorCategory {
    * @type {string}
    * @constant
    */
-  PATTERN_MATCHER = "PATTER_MATCHER"
+  PATTERN_MATCHER = "PATTER_MATCHER",
 }

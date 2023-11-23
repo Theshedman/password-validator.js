@@ -1,13 +1,8 @@
-import type { Config } from 'jest';
-import { defaults } from 'jest-config';
+import type { Config } from "jest";
 
 const config: Config = {
-  moduleFileExtensions: [...defaults.moduleFileExtensions, 'mts'],
-  collectCoverageFrom: [
-    '**/*.ts',
-    '!**/node_modules/**',
-    '!**/vendor/**',
-  ],
+  moduleFileExtensions: ["js", "ts"],
+  collectCoverageFrom: ["**/*.ts", "!**/node_modules/**", "!**/vendor/**"],
   coverageThreshold: {
     global: {
       branches: 80,
@@ -16,25 +11,27 @@ const config: Config = {
       statements: -10,
     },
   },
-  displayName: 'Password Validator',
-  extensionsToTreatAsEsm: ['.ts'],
-  roots: ['<rootDir>/src/'],
-  testMatch: ['**/test/**/*.ts', '**/?(*.)+(spec|test).ts'],
+  displayName: "Password Validator",
+  extensionsToTreatAsEsm: [".ts"],
+  roots: ["<rootDir>/src/"],
+  testMatch: ["**/test/**/*.ts", "**/?(*.)+(spec|test).ts"],
   verbose: true,
-  preset: 'ts-jest/presets/default-esm', // or other ESM presets
+  preset: "ts-jest/presets/default-esm", // or other ESM presets
   moduleNameMapper: {
-    '^(\\.{1,2}/.*)\\.js$': '$1',
+    "^(\\.{1,2}/.*)\\.js$": "$1",
   },
   transform: {
     // '^.+\\.[tj]sx?$' to process js/ts with `ts-jest`
     // '^.+\\.m?[tj]sx?$' to process js/ts/mjs/mts with `ts-jest`
-    '^.+\\.tsx?$': [
-      'ts-jest',
+    "^.+\\.tsx?$": [
+      "ts-jest",
       {
         useESM: true,
       },
     ],
   },
+  coveragePathIgnorePatterns: ["src/password/usages/*"],
+  testPathIgnorePatterns: ["src/password/usages/*"],
 };
 
 export default config;

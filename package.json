@@ -1,22 +1,79 @@
 {
-  "name": "password-validator",
+  "name": "@password-validator/core",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "@password-validator/core is a JavaScript/TypeScript library that helps enforce strong password policies in applications, improving security by validating password features like length, character types, and consistency with best practices.",
   "type": "module",
+  "main": "./dist/cjs/src/password/validator/main.js",
+  "module": "./dist/esm/src/password/validator/main.js",
+  "exports": {
+    "types": "./dest/types/src/password/validator/main.d.ts",
+    "import": "./dest/esm/src/password/validator/main.js",
+    "require": "./dest/cjs/src/password/validator/main.js"
+  },
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:cov": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
-    "compile": "tsc"
+    "build": "npm run build:clean && npm run build:cjs && npm run build:esm && node package-dist.writer.js",
+    "build:esm": "node package-root.updater.js type=module && tsc --project tsconfig.esm.json",
+    "build:cjs": "node package-root.updater.js type=commonjs && tsc --project tsconfig.cjs.json",
+    "lint": "eslint --fix src/**/*.ts",
+    "build:clean": "rimraf dist"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "password",
+    "validator",
+    "rules",
+    "policy"
+  ],
+  "packageManager": "npm@10.2.4",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Theshedman/password-validator.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Theshedman/password-validator.js/issues"
+  },
+  "release": {
+    "branches": {
+      "name": "main"
+    },
+    "ci": true,
+    "repositoryUrl": "https://github.com/Theshedman/password-validator.js",
+    "tagFormat": "v${version}"
+  },
+  "homepage": "https://github.com/Theshedman/password-validator.js",
+  "author": "Shedrack Ajaegbu <shedrack3@gmail.com> (https://github.com/Theshedman)",
+  "contributors": [
+    {
+      "name": "Shedrack Ajaegbu",
+      "email": "shedrack3@gmail.com",
+      "url": "https://github.com/Theshedman"
+    },
+    {
+      "email": "okorocode@gmail.com",
+      "name": "Uchenna Sylvester Okoro",
+      "url": "https://github.com/UcheSylvester"
+    }
+  ],
+  "license": "MIT",
   "devDependencies": {
-    "@types/jest": "^29.5.8",
-    "jest": "^29.7.0",
-    "ts-jest": "^29.1.1",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.2.2"
+    "@types/jest": "29.5.10",
+    "@typescript-eslint/eslint-plugin": "6.12.0",
+    "@typescript-eslint/parser": "6.12.0",
+    "eslint": "8.54.0",
+    "eslint-config-prettier": "9.0.0",
+    "eslint-config-standard-with-typescript": "40.0.0",
+    "eslint-plugin-import": "2.29.0",
+    "eslint-plugin-jest": "27.6.0",
+    "eslint-plugin-n": "16.3.1",
+    "eslint-plugin-prettier": "5.0.1",
+    "eslint-plugin-promise": "6.1.1",
+    "jest": "29.7.0",
+    "prettier": "3.1.0",
+    "prettier-eslint": "16.1.2",
+    "rimraf": "5.0.5",
+    "ts-jest": "29.1.1",
+    "ts-node": "10.9.1",
+    "typescript": "5.2.2"
   }
 }

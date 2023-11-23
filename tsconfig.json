@@ -13,7 +13,8 @@
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,
-    "outDir": "./build",
+    "outDir": "./dist",
+    "declarationDir": "dist/types",
     "sourceMap": false,
     "target": "ESNext",
     "strict": true,
@@ -24,11 +25,18 @@
     "moduleDetection": "auto",
     "moduleResolution": "NodeNext",
     "esModuleInterop": true,
-    "types": ["jest", "node", "@types/jest"]
+    "types": [
+      "jest",
+      "node",
+      "@types/jest"
+    ]
   },
   "ts-node": {
     "esm": true,
     "experimentalSpecifierResolution": "node"
   },
-  "include": ["src/**/*"],
+  "exclude": [
+    "src/test/*",
+    "node_modules"
+  ]
 }

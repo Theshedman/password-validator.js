@@ -4,8 +4,11 @@
 name: NPM Package
 
 on:
-  release:
-    types: [ created ]
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
 
 jobs:
   build:
@@ -17,9 +20,10 @@ jobs:
           node-version: 18
       - run: npm install-ci-test
 
-  publish-npm:
+  publish-npm-package:
     needs: build
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -28,6 +32,22 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm prune --production
       - run: npm ci
+      - run: npm run build
       - run: npm publish --access=public
         env:
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}
+
+  release:
+    needs: [ build, publish-npm-package ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.VALIDATOR_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false

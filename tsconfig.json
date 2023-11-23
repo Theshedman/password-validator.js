@@ -14,7 +14,6 @@
     "removeComments": true,
     "preserveConstEnums": true,
     "outDir": "./dist",
-    "declarationDir": "dist/types",
     "sourceMap": false,
     "target": "ESNext",
     "strict": true,

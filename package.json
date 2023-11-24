@@ -6,9 +6,9 @@
   "main": "./dist/cjs/src/password/validator/main.js",
   "module": "./dist/esm/src/password/validator/main.js",
   "exports": {
-    "types": "./dest/types/src/password/validator/main.d.ts",
-    "import": "./dest/esm/src/password/validator/main.js",
-    "require": "./dest/cjs/src/password/validator/main.js"
+    "types": "./dist/types/src/password/validator/main.d.ts",
+    "import": "./dist/esm/src/password/validator/main.js",
+    "require": "./dist/cjs/src/password/validator/main.js"
   },
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",

@@ -6,7 +6,7 @@ import { MinLengthValidator } from "../password/validator/MinLengthValidator.js"
 import { MaxLengthValidator } from "../password/validator/MaxLengthValidator.js";
 import { LowerCaseValidator } from "../password/validator/LowerCaseValidator.js";
 import { UpperCaseValidator } from "../password/validator/UpperCaseValidator.js";
-import { SpaceCharacterValidator } from "../password/validator/SpaceCharacterValidator.js";
+import { NoSpaceCharacterValidator } from "../password/validator/NoSpaceCharacterValidator.js";
 import { PasswordValidatorManager } from "../password/validator/PasswordValidatorManager.js";
 import { SpecialCharacterValidator } from "../password/validator/SpecialCharacterValidator.js";
 import { PasswordValidatorConflictException } from "../password/validator/PasswordValidatorConflictException.js";
@@ -232,13 +232,13 @@ describe.each([
   { password: "WldkKF", expected: true },
   { password: "kdvAd! #k", rule: 4, expected: false },
   { password: "K,dslJG#<>HDmd.kL", rule: 5, expected: true },
-])("Space Character Validation", ({ password, expected }): void => {
-  it(`should validate Space Characters in: "${password}"`, (): void => {
+])("No Space Character Validation", ({ password, expected }): void => {
+  it(`should validate No Space Characters in: "${password}"`, (): void => {
     const pm: ValidatorManager = new PasswordValidatorManager();
 
-    const spaceCharacterValidator: PasswordValidator =
-      new SpaceCharacterValidator();
-    pm.register(spaceCharacterValidator);
+    const noSpaceCharacterValidator: PasswordValidator =
+      new NoSpaceCharacterValidator();
+    pm.register(noSpaceCharacterValidator);
 
     const actual: ValidationResult = pm.validate(password);
 

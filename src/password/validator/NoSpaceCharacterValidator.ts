@@ -3,7 +3,7 @@ import { ValidationResult } from "./ValidationResult.js";
 import { PasswordValidator } from "./PasswordValidator.js";
 import { ValidatorCategory } from "./ValidatorCategory.js";
 
-export class SpaceCharacterValidator extends PasswordValidator {
+export class NoSpaceCharacterValidator extends PasswordValidator {
   constructor() {
     super(ValidatorCategory.PATTERN_MATCHER, 0);
   }

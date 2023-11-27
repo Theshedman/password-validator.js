@@ -20,7 +20,6 @@
 
 ---
 
-
 A zero dependency library for password validation that lets you compose and combine multiple rules to create a validator that suits your needs.
 
 ### Installation
@@ -42,7 +41,8 @@ const uppercases = new UpperCaseValidator(2); // At least 2 uppercase characters
 const lowercases = new LowerCaseValidator(2); // At least 2 lowercase characters
 const specialCharacters = new SpecialCharacterValidator(2); // At least 2 special characters
 
-pm.register(minLength, maxLength, uppercases, lowercases, specialCharacters);  // Register all the validators with the manager
+// Register all the validators with the manager
+pm.register(minLength, maxLength, uppercases, lowercases, specialCharacters);
 
 // Use the manager to validate passwords
 const result = pm.validate('MyPassword123!*') // { valid: true, messages: [] } --> Password is valid
@@ -52,30 +52,11 @@ const result = pm.validate('MyPassword123'); // { valid: false, messages: ['must
 
 ### Validators
 
-A validator is class that can validate a password and return a result. A validator can be used on its own (as shown below) or in conjunction with a `PasswordValidatorManager` (as show above) to create a more complex validator.
-
-```ts
-import { MinLengthValidator, DigitValidator } from '@password-validator/core';
-
-// MinLengthValidator
-const minLength = new MinLengthValidator(10); // Minimum length of 8 characters
-
-// Use the min length validator to validate passwords
-const result = minLength.validate('MyPassword') // { valid: true, messages: [] } --> Password is valid
-const result = minLength.validate('Password') // { valid: false, messages: ['must not be less than 10 minimum characters.'] } --> Password is valid
-
-
-// DigitValidator
-const digitValidator = new DigitValidator(2); // At least 2 digits
-
-// Use the digit validator to validate passwords
-const result = digitValidator.validate('MyPassword123') // { valid: true, messages: [] } --> Password is valid
-const result = digitValidator.validate('MyPassword') // { valid: false, messages: ['must contain at least 2 digits.'] } --> Password is invalid
-```
+A validator is class that can validate a password and return a result. Validators should typically be registered with the `PasswordValidatorManager` (as shown above). The library comes with a number of validators (see table below) that can be used to build a validation suite.
 
 Each validator receives a `passwordRule` _(number)_ argument in its constructor which defines the number of expected characters associated with the validator. For example, the `const minLength = new MinLengthValidator(10)` defined above means that the passowrd must be atleast __10 characters__ long to be considered valid.
 
-NB: The only exception to this is the `SpaceCharacterValidator` which requires no arguments and simply ensures the password contains no spaces.
+NB: The only exception to this is the `NoSpaceCharacterValidator` which requires no arguments and simply ensures the password contains no spaces.
 
 ### Conflicting Validators
 
@@ -107,8 +88,8 @@ Supported Validators and Managers as of now are:
 |**MaxLengthValidator(passwordRule: number)**| specifies password must not exceed _passwordRule_ number of character(s)  |
 |**MinLengthValidator(passwordRule: number)**  | specifies password must not be less than _passwordRule_ number of character(s)                      |
 |**SpecialCharacterValidator(passwordRule: number)**          | specifies password must include at least _passwordRule_ number of special character(s)                                                                |
-|**SpaceCharacterValidator()**   | specifies password must not include spaces                       |
+|**NoSpaceCharacterValidator()**   | specifies password must not include spaces                       |
 | **Managers**                       |
-|**PasswordValidatorManager(...validators: PasswordValidator[])**          | Allows registering multiple validators at once to build a more complex validation suite.                                                             |
+|**PasswordValidatorManager().register(...validators: PasswordValidator[])**          | Register multiple validators at once to build a validation suite.                                                             |
 
 

@@ -3,12 +3,12 @@
   "version": "0.0.0-semantic-release",
   "description": "@password-validator/core is a JavaScript/TypeScript library that helps enforce strong password policies in applications, improving security by validating password features like length, character types, and consistency with best practices.",
   "type": "module",
-  "main": "./dist/cjs/src/password/validator/main.js",
-  "module": "./dist/esm/src/password/validator/main.js",
+  "main": "./dist/cjs/src/password/main.js",
+  "module": "./dist/esm/src/password/main.js",
   "exports": {
-    "types": "./dist/types/src/password/validator/main.d.ts",
-    "import": "./dist/esm/src/password/validator/main.js",
-    "require": "./dist/cjs/src/password/validator/main.js"
+    "types": "./dist/types/src/password/main.d.ts",
+    "import": "./dist/esm/src/password/main.js",
+    "require": "./dist/cjs/src/password/main.js"
   },
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",

@@ -1,18 +1,18 @@
 import { DigitValidator } from "../password/validator/DigitValidator.js";
 import { ValidationResult } from "../password/validator/ValidationResult.js";
-import { ValidatorManager } from "../password/validator/ValidatorManager.js";
+import { ValidatorManager } from "../password/api/standard/ValidatorManager.js";
 import { PasswordValidator } from "../password/validator/PasswordValidator.js";
 import { MinLengthValidator } from "../password/validator/MinLengthValidator.js";
 import { MaxLengthValidator } from "../password/validator/MaxLengthValidator.js";
 import { LowerCaseValidator } from "../password/validator/LowerCaseValidator.js";
 import { UpperCaseValidator } from "../password/validator/UpperCaseValidator.js";
 import { NoSpaceCharacterValidator } from "../password/validator/NoSpaceCharacterValidator.js";
-import { PasswordValidatorManager } from "../password/validator/PasswordValidatorManager.js";
+import { PasswordValidatorManager } from "../password/api/standard/PasswordValidatorManager.js";
 import { SpecialCharacterValidator } from "../password/validator/SpecialCharacterValidator.js";
-import { PasswordValidatorConflictException } from "../password/validator/PasswordValidatorConflictException.js";
+import { PasswordValidatorConflictException } from "../password/api/standard/PasswordValidatorConflictException.js";
 
 it("should create a password validator manager", (): void => {
-  const pm: ValidatorManager = new PasswordValidatorManager();
+  const pm: ValidatorManager = PasswordValidatorManager.standard();
 
   expect(pm).toBeTruthy();
 });
@@ -24,16 +24,20 @@ describe.each([
     validators: [MinLengthValidator, MaxLengthValidator, DigitValidator],
     expected: 3,
   },
-])("Password Validators Registration", ({ validators, expected }) =>
-  it(`should be able to register ${expected} validator`, (): void => {
-    const pm: ValidatorManager = new PasswordValidatorManager();
+])(
+  "FluentPasswordValidator Validators Registration",
+  ({ validators, expected }) =>
+    it(`should be able to register ${expected} validator`, (): void => {
+      const pm: ValidatorManager = PasswordValidatorManager.standard();
 
-    const validatorInstances: Array<PasswordValidator> = Array.of();
-    validators.forEach(Validator => validatorInstances.push(new Validator(1)));
+      const validatorInstances: Array<PasswordValidator> = Array.of();
+      validators.forEach(Validator =>
+        validatorInstances.push(new Validator(1)),
+      );
 
-    pm.register(...validatorInstances);
-    expect(pm.validators()).toHaveLength(expected);
-  }),
+      pm.register(...validatorInstances);
+      expect(pm.validators()).toHaveLength(expected);
+    }),
 );
 
 describe.each([
@@ -61,7 +65,7 @@ describe.each([
   },
 ])("Conflict Validation", ({ validators }): void => {
   it("should check for conflicts before registration", (): void => {
-    const pm: ValidatorManager = new PasswordValidatorManager();
+    const pm: ValidatorManager = PasswordValidatorManager.standard();
 
     const validatorInstances: Array<PasswordValidator> = Array.of();
 
@@ -83,7 +87,7 @@ describe.each([
   { password: "dotnet", rule: 6, expected: true },
 ])("Minimum Length Validation", ({ password, rule, expected }): void => {
   it(`should validate minLength ${rule}`, (): void => {
-    const pm: ValidatorManager = new PasswordValidatorManager();
+    const pm: ValidatorManager = PasswordValidatorManager.standard();
 
     const minLength: PasswordValidator = new MinLengthValidator(rule);
     pm.register(minLength);
@@ -102,7 +106,7 @@ describe.each([
   { password: "dotnet", rule: 6, expected: true },
 ])("Maximum Length Validation", ({ password, rule, expected }): void => {
   it(`should validate maxLength ${rule}`, (): void => {
-    const pm: ValidatorManager = new PasswordValidatorManager();
+    const pm: ValidatorManager = PasswordValidatorManager.standard();
 
     const maxLengthValidator: PasswordValidator = new MaxLengthValidator(rule);
     pm.register(maxLengthValidator);
@@ -123,7 +127,7 @@ describe.each([
   "Minimum & Maximum Length Validation",
   ({ password, minRule, maxRule, expected }): void => {
     it(`should validate minimumLength ${minRule} maxLength ${maxRule}`, (): void => {
-      const pm: ValidatorManager = new PasswordValidatorManager();
+      const pm: ValidatorManager = PasswordValidatorManager.standard();
 
       const minLengthValidator: PasswordValidator = new MinLengthValidator(
         minRule,
@@ -147,18 +151,21 @@ describe.each([
   { password: "Id0_consume4r", rule: 3, expected: false },
   { password: "pa3sswor8d", rule: 4, expected: false },
   { password: "d2o34tne5tw3", rule: 5, expected: true },
-])("Password Digit Validation", ({ password, rule, expected }): void => {
-  it(`should validate minimum digit ${rule}`, (): void => {
-    const pm: ValidatorManager = new PasswordValidatorManager();
+])(
+  "FluentPasswordValidator Digit Validation",
+  ({ password, rule, expected }): void => {
+    it(`should validate minimum digit ${rule}`, (): void => {
+      const pm: ValidatorManager = PasswordValidatorManager.standard();
 
-    const digitValidator: PasswordValidator = new DigitValidator(rule);
-    pm.register(digitValidator);
+      const digitValidator: PasswordValidator = new DigitValidator(rule);
+      pm.register(digitValidator);
 
-    const actual: ValidationResult = pm.validate(password);
+      const actual: ValidationResult = pm.validate(password);
 
-    expect(actual.isValid()).toBe(expected);
-  });
-});
+      expect(actual.isValid()).toBe(expected);
+    });
+  },
+);
 
 describe.each([
   { password: "LAJDEs3", rule: 1, expected: true },
@@ -171,7 +178,7 @@ describe.each([
   { password: "d2o34tne5tw3", rule: 5, expected: true },
 ])("Lowercase Validation", ({ password, rule, expected }): void => {
   it(`should validate Lowercase ${rule}`, (): void => {
-    const pm: ValidatorManager = new PasswordValidatorManager();
+    const pm: ValidatorManager = PasswordValidatorManager.standard();
 
     const lowerCaseValidation: PasswordValidator = new LowerCaseValidator(rule);
     pm.register(lowerCaseValidation);
@@ -193,7 +200,7 @@ describe.each([
   { password: "K,dslJGHDmdkL", rule: 5, expected: true },
 ])("Uppercase Validation", ({ password, rule, expected }): void => {
   it(`should validate Uppercase ${rule}`, (): void => {
-    const pm: ValidatorManager = new PasswordValidatorManager();
+    const pm: ValidatorManager = PasswordValidatorManager.standard();
 
     const upperCaseValidator: PasswordValidator = new UpperCaseValidator(rule);
     pm.register(upperCaseValidator);
@@ -213,7 +220,7 @@ describe.each([
   { password: "K,dslJG#<>HDmd.kL", rule: 5, expected: true },
 ])("Special Character Validation", ({ password, rule, expected }): void => {
   it(`should validate Special Characters ${rule}`, (): void => {
-    const pm: ValidatorManager = new PasswordValidatorManager();
+    const pm: ValidatorManager = PasswordValidatorManager.standard();
 
     const specialCharacterValidator: PasswordValidator =
       new SpecialCharacterValidator(rule);
@@ -234,7 +241,7 @@ describe.each([
   { password: "K,dslJG#<>HDmd.kL", rule: 5, expected: true },
 ])("No Space Character Validation", ({ password, expected }): void => {
   it(`should validate No Space Characters in: "${password}"`, (): void => {
-    const pm: ValidatorManager = new PasswordValidatorManager();
+    const pm: ValidatorManager = PasswordValidatorManager.standard();
 
     const noSpaceCharacterValidator: PasswordValidator =
       new NoSpaceCharacterValidator();
@@ -300,7 +307,7 @@ describe.each([
   },
 ])("Complex Validation", ({ password, validators, expected }) => {
   it(`should check for strong password "${password}"`, (): void => {
-    const pm: ValidatorManager = new PasswordValidatorManager();
+    const pm: ValidatorManager = PasswordValidatorManager.standard();
     const validatorInstances: Array<PasswordValidator> = Array.of();
 
     validators.forEach((Password): void => {
@@ -312,5 +319,26 @@ describe.each([
     const actual: ValidationResult = pm.validate(password);
 
     expect(actual.isValid()).toBe(expected);
+  });
+});
+
+describe("Fluent API for Password Validators", (): void => {
+  it("should validate min and max length", (): void => {
+    const userPassword = "shnsd";
+    const result: ValidationResult = PasswordValidatorManager.fluent()
+      .min(6)
+      .max(8)
+      .validate(userPassword);
+
+    expect(result.isValid()).toBe(false);
+  });
+  it("should validate min length, uppercase and special character", (): void => {
+    const userPassword = "shnsdLd%";
+    const result: ValidationResult = PasswordValidatorManager.fluent()
+      .min(6)
+      .specialCharacter(1)
+      .validate(userPassword);
+
+    expect(result.isValid()).toBe(true);
   });
 });

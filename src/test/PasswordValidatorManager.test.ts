@@ -1,6 +1,6 @@
 import { DigitValidator } from "../password/validator/DigitValidator.js";
 import { ValidationResult } from "../password/validator/ValidationResult.js";
-import { ValidatorManager } from "../password/api/standard/ValidatorManager.js";
+import { ValidatorManager } from "../password/validator/ValidatorManager.js";
 import { PasswordValidator } from "../password/validator/PasswordValidator.js";
 import { MinLengthValidator } from "../password/validator/MinLengthValidator.js";
 import { MaxLengthValidator } from "../password/validator/MaxLengthValidator.js";
@@ -9,7 +9,7 @@ import { UpperCaseValidator } from "../password/validator/UpperCaseValidator.js"
 import { NoSpaceCharacterValidator } from "../password/validator/NoSpaceCharacterValidator.js";
 import { PasswordValidatorManager } from "../password/api/standard/PasswordValidatorManager.js";
 import { SpecialCharacterValidator } from "../password/validator/SpecialCharacterValidator.js";
-import { PasswordValidatorConflictException } from "../password/api/standard/PasswordValidatorConflictException.js";
+import { PasswordValidatorConflictException } from "../password/validator/PasswordValidatorConflictException.js";
 
 it("should create a password validator manager", (): void => {
   const pm: ValidatorManager = PasswordValidatorManager.standard();
@@ -332,6 +332,7 @@ describe("Fluent API for Password Validators", (): void => {
 
     expect(result.isValid()).toBe(false);
   });
+
   it("should validate min length, uppercase and special character", (): void => {
     const userPassword = "shnsdLd%";
     const result: ValidationResult = PasswordValidatorManager.fluent()
@@ -340,5 +341,20 @@ describe("Fluent API for Password Validators", (): void => {
       .validate(userPassword);
 
     expect(result.isValid()).toBe(true);
+  });
+
+  it("should validate digit, noSpace, min and max length, lowercase and uppercase and special character", (): void => {
+    const userPassword = "shnsdLd%";
+    const result: ValidationResult = PasswordValidatorManager.fluent()
+      .min(6)
+      .max(10)
+      .digit(1)
+      .lower(4)
+      .upper(1)
+      .noSpace()
+      .specialCharacter(1)
+      .validate(userPassword);
+
+    expect(result.isValid()).toBe(false);
   });
 });

@@ -20,7 +20,7 @@
 
 ---
 
-A robust dependency-free, regex-free library for password validation! It lets you compose and combine multiple validators, creating a validation suit that meets your needs.
+A robust dependency-free, regex-free library for password validation! It lets you compose, combine and/or chain multiple validators to create a validation suite that meets your needs.
 
 ## Installation
 
@@ -32,7 +32,7 @@ npm install @password-validator/core
 
 Password validator exposes 2 APIs for validating passwords:
 
-1. `standard` - This allows you register multiple validator classes with the `PasswordValidatorManager` to build a validation suite.
+1. __`standard`__ - This allows you register multiple validator classes with the `PasswordValidatorManager` to build a validation suite.
 
 ```ts
 import { LowerCaseValidator, MaxLengthValidator, MinLengthValidator, PasswordValidatorManager, SpecialCharacterValidator, UpperCaseValidator } from '@password-validator/core';
@@ -51,11 +51,10 @@ pm.register(minLength, maxLength, uppercases, lowercases, specialCharacters);
 // Use the manager to validate passwords
 const result = pm.validate('MyPassword123!*') // { valid: true, messages: [] } --> Password is valid
 const result = pm.validate('MyPassword123'); // { valid: false, messages: ['must contain at least 2 special characters.'] } --> Password is invalid
-
 ```
 
-2. `fluent` - This allows you chain multiple validators together on the `PasswordValidatorManager` in a more functional programming style.
-This is useful when you want to validate a password without having to register the validators with the manager. It still uses the same validators as the `standard` API but provides an interface for chaining them together.
+2. __`fluent`__ - This allows you chain multiple validators together on the `PasswordValidatorManager` in a more functional programming style. This is useful when you want to validate a password without having to register the validators with the manager.
+It still uses the same validators as the `standard` API but provides an interface for chaining them together.
 
 
 ```ts
@@ -73,9 +72,9 @@ NB: Ensure to call the `validate` method with the `password` to be validated. Wi
 
 ## Validators
 
-A validator is class that can validate a password and return a result. This is used by both the `Standard` and the `Fluent` API. The library comes with a number of validators (see table below) that can be used to build a validation suite.
+A validator is class that can validate a password and return a result. This is used by both the `Standard` and the `Fluent` APIs. The library comes with a number of validators (see table below) that can be used to build a validation suite.
 
-Each validator receives a `passwordRule` _(number)_ argument, which defines the number of expected characters associated with the validator.
+Each validator receives a _`passwordRule` (number)_ argument, which defines the number of expected characters associated with the validator.
 Consider the following example:
 
 ```ts
@@ -111,9 +110,9 @@ const pm = PasswordValidatorManager.standard(); // Create a password validator m
 const minLength = new MinLengthValidator(12);
 const maxLength = new MaxLengthValidator(8);
 
-pm.register(minLength, maxLength);
+pm.register(minLength, maxLength); // Throws PasswordValidatorConflictException --> `minLength cannot be greater than maxLength`
 
-const result = pm.validate('MyPassword123!*') // Throws PasswordValidatorConflictException --> `minLength cannot be greater than maxLength`
+const result = pm.validate('MyPassword123!*')
 ```
 ---
 
@@ -131,6 +130,4 @@ Supported Validators and Managers as of now are:
 |**`MinLengthValidator(passwordRule: number)`**|**`.min(passwordRule: number)`**|specifies password must not be less than passwordRule number of character(s)|
 |**`SpecialCharacterValidator(passwordRule: number)`**|**`.specialCharacter(passwordRule: number)`**|	specifies password must include at least passwordRule number of special character(s)|
 |**`NoSpaceCharacterValidator()`**|**`.noSpace()`**|specifies password must not include spaces|
-
-
 

@@ -1,0 +1,21 @@
+name: 'coverage'
+on:
+  push:
+    branches:
+      - main
+      - beta
+jobs:
+  coverage:
+    permissions:
+      checks: write
+      pull-requests: write
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: jwalton/gh-find-current-pr@v1
+        id: findPr
+      - uses: ArtiomTr/jest-coverage-report-action@v2
+        with:
+          test-script: npm test
+          prnumber: ${{ steps.findPr.outputs.number }}

@@ -10,11 +10,20 @@
   </a>
 
   <a href="https://github.com/Theshedman/password-validator.js" style="text-decoration:none">
-    <img src="https://img.shields.io/github/workflow/status/Theshedman/password-validator/build-ci?logo=github" />
+    <img src="https://img.shields.io/github/actions/workflow/status/Theshedman/password-validator.js/.github%2Fworkflows%2Frelease.yaml
+?branch=main" />
   </a>
 
   <a href="https://github.com/Theshedman/password-validator.js" style="text-decoration:none">
-    <img src="https://img.shields.io/github/languages/top/Theshedman/password-validator.js.svg"  />
+    <img src="https://img.shields.io/github/issues/Theshedman/password-validator.js"  />
+  </a>
+
+  <a href="https://github.com/Theshedman/password-validator.js" style="text-decoration:none">
+    <img src="https://img.shields.io/github/issues-pr/Theshedman/password-validator.js"  />
+  </a>
+
+  <a href="https://github.com/Theshedman/password-validator.js" style="text-decoration:none">
+    <img src="https://img.shields.io/npm/l/%40password-validator%2Fcore"  />
   </a>
 </div>
 
@@ -52,15 +61,18 @@ const result = pm.validate('MyPassword123'); // { valid: false, messages: ['must
 
 ### Validators
 
-A validator is class that can validate a password and return a result. Validators should typically be registered with the `PasswordValidatorManager` (as shown above). The library comes with a number of validators (see table below) that can be used to build a validation suite.
+A validator is class that can validate a password and return a result. Validators should typically be registered with the `PasswordValidatorManager` (as shown above). The library
+comes with a number of validators (see table below) that can be used to build a validation suite.
 
-Each validator receives a `passwordRule` _(number)_ argument in its constructor which defines the number of expected characters associated with the validator. For example, the `const minLength = new MinLengthValidator(10)` defined above means that the passowrd must be atleast __10 characters__ long to be considered valid.
+Each validator receives a `passwordRule` _(number)_ argument in its constructor which defines the number of expected characters associated with the validator. For example,
+the `const minLength = new MinLengthValidator(10)` defined above means that the passowrd must be atleast __10 characters__ long to be considered valid.
 
 NB: The only exception to this is the `NoSpaceCharacterValidator` which requires no arguments and simply ensures the password contains no spaces.
 
 ### Conflicting Validators
 
-In a case of conflict validations, for example, a password must be __12 characters long minimum__, and also be __8 characters maximum__, we throw a `PasswordValidatorConflictException` error. This is because minimum length cannot be greater than maximum length.
+In a case of conflict validations, for example, a password must be __12 characters long minimum__, and also be __8 characters maximum__, we throw
+a `PasswordValidatorConflictException` error. This is because minimum length cannot be greater than maximum length.
 
 ```ts
 import { MinLengthValidator, MaxLengthValidator } from '@password-validator/core';
@@ -79,17 +91,17 @@ const result = pm.validate('MyPassword123!*') // Throws PasswordValidatorConflic
 
 Supported Validators and Managers as of now are:
 
-|     Rules            |               Descriptions                                                                                                       |
-|:---------------------|:---------------------------------------------------------------------------------------------------------------------------------|
-| **Validations**                       |
-|**DigitValidator(passwordRule: number)**   | specifies password must include _passwordRule_ number of digits                         |
-|**LowerCaseValidator(passwordRule: number)**  | specifies password must include at least _passwordRule_ number of lowercase character(s)                     |
-|**UpperCaseValidator(passwordRule: number)**| specifies password must include at least _passwordRule_ number of uppercase character(s)  |
-|**MaxLengthValidator(passwordRule: number)**| specifies password must not exceed _passwordRule_ number of character(s)  |
-|**MinLengthValidator(passwordRule: number)**  | specifies password must not be less than _passwordRule_ number of character(s)                      |
-|**SpecialCharacterValidator(passwordRule: number)**          | specifies password must include at least _passwordRule_ number of special character(s)                                                                |
-|**NoSpaceCharacterValidator()**   | specifies password must not include spaces                       |
-| **Managers**                       |
-|**PasswordValidatorManager().register(...validators: PasswordValidator[])**          | Register multiple validators at once to build a validation suite.                                                             |
+| Rules                                                                       | Descriptions                                                                             |
+|:----------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------|
+| **Validations**                                                             |
+| **DigitValidator(passwordRule: number)**                                    | specifies password must include _passwordRule_ number of digits                          |
+| **LowerCaseValidator(passwordRule: number)**                                | specifies password must include at least _passwordRule_ number of lowercase character(s) |
+| **UpperCaseValidator(passwordRule: number)**                                | specifies password must include at least _passwordRule_ number of uppercase character(s) |
+| **MaxLengthValidator(passwordRule: number)**                                | specifies password must not exceed _passwordRule_ number of character(s)                 |
+| **MinLengthValidator(passwordRule: number)**                                | specifies password must not be less than _passwordRule_ number of character(s)           |
+| **SpecialCharacterValidator(passwordRule: number)**                         | specifies password must include at least _passwordRule_ number of special character(s)   |
+| **NoSpaceCharacterValidator()**                                             | specifies password must not include spaces                                               |
+| **Managers**                                                                |
+| **PasswordValidatorManager().register(...validators: PasswordValidator[])** | Register multiple validators at once to build a validation suite.                        |
 
 

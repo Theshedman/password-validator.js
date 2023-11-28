@@ -1,5 +1,5 @@
 import { DigitValidator } from "../../validator/DigitValidator.js";
-import { ValidatorManager } from "../standard/ValidatorManager.js";
+import { ValidatorManager } from "../../validator/ValidatorManager.js";
 import { ValidationResult } from "../../validator/ValidationResult.js";
 import { PasswordValidator } from "../../validator/PasswordValidator.js";
 import { UpperCaseValidator } from "../../validator/UpperCaseValidator.js";

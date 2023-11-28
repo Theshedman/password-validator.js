@@ -10,11 +10,20 @@
   </a>
 
   <a href="https://github.com/Theshedman/password-validator.js" style="text-decoration:none">
-    <img src="https://img.shields.io/github/workflow/status/Theshedman/password-validator/build-ci?logo=github" />
+    <img src="https://img.shields.io/github/actions/workflow/status/Theshedman/password-validator.js/.github%2Fworkflows%2Frelease.yaml
+?branch=main" />
   </a>
 
   <a href="https://github.com/Theshedman/password-validator.js" style="text-decoration:none">
-    <img src="https://img.shields.io/github/languages/top/Theshedman/password-validator.js.svg"  />
+    <img src="https://img.shields.io/github/issues/Theshedman/password-validator.js"  />
+  </a>
+
+  <a href="https://github.com/Theshedman/password-validator.js" style="text-decoration:none">
+    <img src="https://img.shields.io/github/issues-pr/Theshedman/password-validator.js"  />
+  </a>
+
+  <a href="https://github.com/Theshedman/password-validator.js" style="text-decoration:none">
+    <img src="https://img.shields.io/npm/l/%40password-validator%2Fcore"  />
   </a>
 </div>
 
@@ -100,7 +109,8 @@ NB: The only exception to this is the `NoSpaceCharacterValidator` (`PasswordVali
 
 ### Conflicting Validators
 
-In a case of conflict validations, for example, a password must be __12 characters long minimum__, and also be __8 characters maximum__, we throw a `PasswordValidatorConflictException` error. This is because minimum length cannot be greater than maximum length.
+In a case of conflict validations, for example, a password must be __12 characters long minimum__, and also be __8 characters maximum__, we throw
+a `PasswordValidatorConflictException` error. This is because minimum length cannot be greater than maximum length.
 
 ```ts
 import { MinLengthValidator, MaxLengthValidator } from '@password-validator/core';

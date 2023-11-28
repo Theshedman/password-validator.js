@@ -132,7 +132,7 @@ Supported Validators and Managers as of now are:
 
 | Standard | Fluent   |Description|
 |----------|----------|----------|
-|**`PasswordValidatorManager.standard()`**|**`PasswordValidatorManager.fluent()`**|The base instance use for validation|
+|**`PasswordValidatorManager.standard()`**|**`PasswordValidatorManager.fluent()`**|The base instance for validation|
 |**`DigitValidator(passwordRule: number)`**|**`.digit(passwordRule: number)`**|specifies password must include passwordRule number of digits|
 |**`LowerCaseValidator(passwordRule: number)`**|**`.lower(passwordRule: number)`**|specifies password must include at least passwordRule number of lowercase character(s)|
 |**`UpperCaseValidator(passwordRule: number)`**|**`.upper(passwordRule: number)`**|specifies password must include at least passwordRule number of uppercase character(s)|

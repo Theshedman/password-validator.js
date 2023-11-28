@@ -1,5 +1,5 @@
-import { Validator } from "./Validator.js";
-import { PasswordValidator } from "./PasswordValidator.js";
+import { Validator } from "../../validator/Validator.js";
+import { PasswordValidator } from "../../validator/PasswordValidator.js";
 
 export interface ValidatorManager extends Validator {
   register(...validators: Array<PasswordValidator>): void;

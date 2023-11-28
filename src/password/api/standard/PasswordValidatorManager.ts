@@ -1,8 +1,8 @@
-import { ValidatorManager } from "./ValidatorManager.js";
+import { ValidatorManager } from "../../validator/ValidatorManager.js";
 import { ValidationResult } from "../../validator/ValidationResult.js";
 import { PasswordValidator } from "../../validator/PasswordValidator.js";
-import { PasswordValidatorConflictException } from "./PasswordValidatorConflictException.js";
 import { FluentPasswordValidator } from "../fluent/FluentPasswordValidator.js";
+import { PasswordValidatorConflictException } from "../../validator/PasswordValidatorConflictException.js";
 
 export class PasswordValidatorManager implements ValidatorManager {
   private readonly registeredValidators: Array<PasswordValidator> = Array.of();

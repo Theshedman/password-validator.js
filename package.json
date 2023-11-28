@@ -3,13 +3,13 @@
   "version": "0.0.0-semantic-release",
   "description": "Robust regex-free, dependency-free password validation library.",
   "type": "module",
-  "main": "./dist/cjs/src/password/main.js",
-  "module": "./dist/esm/src/password/main.js",
-  "types": "./dist/types/src/password/main.d.ts",
+  "main": "./dist/cjs/src/password/api/main.js",
+  "module": "./dist/esm/src/password/api/main.js",
+  "types": "./dist/types/src/password/api/main.d.ts",
   "exports": {
-    "types": "./dist/types/src/password/main.d.ts",
-    "import": "./dist/esm/src/password/main.js",
-    "require": "./dist/cjs/src/password/main.js"
+    "types": "./dist/types/src/password/api/main.d.ts",
+    "import": "./dist/esm/src/password/api/main.js",
+    "require": "./dist/cjs/src/password/api/main.js"
   },
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",

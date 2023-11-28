@@ -1,10 +1,11 @@
 {
   "name": "@password-validator/core",
   "version": "0.0.0-semantic-release",
-  "description": "@password-validator/core is a JavaScript/TypeScript library that helps enforce strong password policies in applications, improving security by validating password features like length, character types, and consistency with best practices.",
+  "description": "Robust regex-free, dependency-free password validator library.",
   "type": "module",
   "main": "./dist/cjs/src/password/main.js",
   "module": "./dist/esm/src/password/main.js",
+  "types": "./dist/types/src/password/main.d.ts",
   "exports": {
     "types": "./dist/types/src/password/main.d.ts",
     "import": "./dist/esm/src/password/main.js",
@@ -35,9 +36,15 @@
     "url": "https://github.com/Theshedman/password-validator.js/issues"
   },
   "release": {
-    "branches": {
-      "name": "main"
-    },
+    "branches": [
+      {
+        "name": "main"
+      },
+      {
+        "name": "beta",
+        "prerelease": true
+      }
+    ],
     "ci": true,
     "repositoryUrl": "https://github.com/Theshedman/password-validator.js",
     "tagFormat": "v${version}"

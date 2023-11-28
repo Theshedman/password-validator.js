@@ -10,8 +10,7 @@
   </a>
 
   <a href="https://github.com/Theshedman/password-validator.js" style="text-decoration:none">
-    <img src="https://img.shields.io/github/actions/workflow/status/Theshedman/password-validator.js/.github%2Fworkflows%2Frelease.yaml
-?branch=main" />
+    <img src="https://img.shields.io/github/actions/workflow/status/Theshedman/password-validator.js/.github%2Fworkflows%2Frelease.yaml?branch=main" />
   </a>
 
   <a href="https://github.com/Theshedman/password-validator.js" style="text-decoration:none">
@@ -60,6 +59,7 @@ pm.register(minLength, maxLength, uppercases, lowercases, specialCharacters);
 // Use the manager to validate passwords
 const result = pm.validate('MyPassword123!*') // { valid: true, messages: [] } --> Password is valid
 const result = pm.validate('MyPassword123'); // { valid: false, messages: ['must contain at least 2 special characters.'] } --> Password is invalid
+
 ```
 
 2. __`fluent`__ - This allows you chain multiple validators together on the `PasswordValidatorManager` in a more functional programming style. This is useful when you want to validate a password without having to register the validators with the manager.
@@ -74,6 +74,7 @@ const result = PasswordValidatorManager.fluent()
   .digit(1) // At least 1 digit
   .specialCharacter(1) // At least 1 special character
   .validate("eihi2kd#"); // { valid: true, messages: [] } --> Password is valid
+
 ```
 
 NB: Ensure to call the `validate` method with the `password` to be validated. Without this, the password validation will not be triggered.
@@ -90,8 +91,13 @@ Consider the following example:
 // Standard API
 import { MinLengthValidator } from '@password-validator/core';
 
+const pm = PasswordValidatorManager.standard();
+
 const minLength = new MinLengthValidator(10);
-const result = minLength.validate("eihi2kd#");
+
+pm.register(minLength)
+
+const result = pm.validate("eihi2kd#");
 
 // -----------OR---------------
 
@@ -101,6 +107,7 @@ import { PasswordValidatorManager } from '@password-validator/core';
 const result = PasswordValidatorManager.fluent()
   .min(10)
   .validate("eihi2kd#");
+
 ```
 
 The `new MinLengthValidator(10)` or `PasswordValidatorManager.fluent().min(10)`  defined above means that the passowrd must be atleast __10 characters__ long to be considered valid.
@@ -123,6 +130,7 @@ const maxLength = new MaxLengthValidator(8);
 pm.register(minLength, maxLength); // Throws PasswordValidatorConflictException --> `minLength cannot be greater than maxLength`
 
 const result = pm.validate('MyPassword123!*')
+
 ```
 ---
 

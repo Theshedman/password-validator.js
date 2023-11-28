@@ -1,7 +1,7 @@
 {
   "name": "@password-validator/core",
   "version": "0.0.0-semantic-release",
-  "description": "Robust regex-free, dependency-free password validator library.",
+  "description": "Robust regex-free, dependency-free password validation library.",
   "type": "module",
   "main": "./dist/cjs/src/password/main.js",
   "module": "./dist/esm/src/password/main.js",

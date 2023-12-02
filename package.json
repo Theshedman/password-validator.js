@@ -28,6 +28,9 @@
     "policy"
   ],
   "packageManager": "npm@10.2.4",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Theshedman/password-validator.js.git"

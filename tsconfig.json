@@ -13,6 +13,7 @@
     "removeComments": true,
     "preserveConstEnums": true,
     "outDir": "./dist",
+    "rootDir": "./src",
     "sourceMap": false,
     "target": "ESNext",
     "strict": true,
@@ -33,6 +34,9 @@
     "esm": true,
     "experimentalSpecifierResolution": "node"
   },
+  "include": [
+    "src/**/*.ts"
+  ],
   "exclude": [
     "src/test/*",
     "node_modules"

@@ -225,3 +225,5 @@ out
 .pnp.*
 
 src
+!dist/**/src
+
